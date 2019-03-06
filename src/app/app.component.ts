@@ -14,60 +14,72 @@ export class AppComponent implements OnInit {
     const barWidth = 10;
     const barOffset = 50;
     const radio = 5; //pixeles  
-    const data = [[20, 14], [144, 20], [340, 45], [230, 76], [150, 200], [415, 280]];
+    const data = [
+      { size: 5, point: [20, 14] },
+      { size: 5, point: [144, 20]},
+      { size: 5, point: [340, 45]},
+      { size: 20, point: [230, 76]},
+      { size: 5, point: [150, 200]},
+      { size: 5, point: [240, 45]},
+      { size: 20, point: [130, 76]},
+      { size: 5, point: [350, 200]},
+      { size: 15, point: [415, 280]},
+      { size: 34, point: [150, 400]},
+      { size: 34, point: [300, 150]}
+    ];
+
+    /* el lienzo ..................................................................... */
     const svgWidth = 900;
     const svgHeight = 600;
     const svg = d3.select('#svg')
       .append('svg')
       .attr('width', svgWidth)
       .attr('height', svgHeight);
+    /* el lienzo ..................................................................... */
 
-    const maxX = d3.max(data, d => d[0]);
-    const minX = d3.min(data, d => d[0]);
-    const scaleX = d3.scaleLinear()
-      .domain([minX, maxX])
-      //.range([0, svgWidth]);
-      .range([radio, svgWidth - radio]);
-
-    const maxY = d3.max(data, d => d[1]);
-    const minY = d3.min(data, d => d[1]);
+    /* la escala en Y ................................................................ */
+    const maxY = d3.max(data, d => d.point[1]);
+    const minY = d3.min(data, d => d.point[1]);
+    const maxRadius = d3.max(data, d => d.size);
     const scaleY = d3.scaleLinear()
       .domain([minY, maxY])
       //.range([0, svgHeight]);
-      .range([radio, svgHeight - radio - 5]);
+      //.range([(radio * 2), svgHeight - radio - 5]);
+      .range([maxRadius, svgHeight - maxRadius]);
+    /* la escala en Y ................................................................ */
 
+    /* la escala en X ................................................................ */
+    const maxX = d3.max(data, d => d.point[0]);
+    const minX = d3.min(data, d => d.point[0]);
+    const scaleX = d3.scaleLinear()
+      .domain([minX, maxX])
+      //.range([0, svgWidth]);
+      .range([maxRadius, svgWidth - maxRadius]);
+    /* la escala en X ................................................................ */
+
+    /* los ejes....................................................................... */
     const axisX = d3.axisTop(scaleX);
     const axisY = d3.axisRight(scaleY).ticks(4);
+    /* los ejes....................................................................... */
 
+    /* el circulete................................................................... */
     const circle = svg.selectAll('circle')
       .data(data)
       .enter()
       .append('circle');
     circle
-      .attr('cx', d => scaleX(d[0]))
-      .attr('cy', d => scaleY(d[1]))
-      .attr('r', radio);
-
-    const rectangulo = svg. selectAll('rect')
-      .data(data)
-      .enter()
-      .append('rect');
-
-    rectangulo
-      .style('fill', '#3c663d')
-      .attr('width', barWidth)
-      .attr('height', data => {
-        return svgHeight - data[1];
+      .attr('cx', d => scaleX(d.point[0]))
+      .attr('cy', d => scaleY(d.point[1]))
+      .attr('style', (d) => {
+        if (d.size > 5) {
+          return 'fill: blue;';
+        }
+        return 'fill: red;';
       })
-      .attr('x', (data, i) => {
-        //return i * (barWidth + barOffset);
-        return data[0] - (barWidth / 2);
-      })
-      .attr('y', (data) => {
-        return svgHeight - data[1];
-      });
+      .attr('r', d => d.size);
+    /* el circulete................................................................... */
 
-    // tslint:disable-next-line:no-unused-expression
+    /* Los ejes. Guarda con el objeto "g": es un minilienzo.......................... */
     svg.append('g')
       .attr('class', 'axis')
       .attr('transform', `translate(0, ${svgHeight - 1})`)
@@ -76,7 +88,9 @@ export class AppComponent implements OnInit {
     svg.append('g')
       .attr('class', 'axis')
       .call(axisY);
-  }
+    /* Los ejes. Guarda con el objeto "g": es un minilienzo.......................... */
+
+}
   // ngOnInit() {
   //   const height = 200;
   //   const barWidth = 40;
