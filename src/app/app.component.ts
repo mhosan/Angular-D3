@@ -10,7 +10,7 @@ export class AppComponent implements OnInit {
   title = 'd3prueba';
   ngOnInit() {
     const data = [[20, 14], [14, 20], [34, 45], [23, 76]];
-    const svgWidth = 400;
+    const svgWidth = 500;
     const svgHeight = 400;
     const svg = d3.select('#svg')
       .append('svg')
@@ -22,21 +22,20 @@ export class AppComponent implements OnInit {
     const scaleX = d3.scaleLinear()
       .domain([minX, maxX])
       .range([0, svgWidth]);
-console.log(scaleX(minX), scaleX(maxX));
 
     const maxY = d3.max(data, d => d[1]);
     const minY = d3.min(data, d => d[1]);
     const scaleY = d3.scaleLinear()
       .domain([minY, maxY])
       .range([0, svgHeight]);
-console.log(scaleY(minY), scaleY(maxY));
 
-    const axisX = d3.axisBottom(scaleX);
+    const axisX = d3.axisTop(scaleX);
     const axisY = d3.axisRight(scaleY).ticks(4);
 
+    // tslint:disable-next-line:no-unused-expression
     svg.append('g')
       .attr('class', 'axis')
-      .attr('transform', 'translate(0, ${svgHeight - 1})')
+      .attr('transform', `translate(0, ${svgHeight - 1})`)
       .call(axisX);
 
     svg.append('g')
