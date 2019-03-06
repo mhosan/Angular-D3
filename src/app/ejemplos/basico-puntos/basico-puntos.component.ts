@@ -20,14 +20,18 @@ export class BasicoPuntosComponent implements OnInit {
         { size: 5, point: [20, 14] },
         { size: 5, point: [144, 20]},
         { size: 5, point: [340, 45]},
-        { size: 20, point: [230, 76]},
+        { size: 10, point: [230, 76]},
         { size: 5, point: [150, 200]},
         { size: 5, point: [240, 45]},
-        { size: 20, point: [130, 76]},
+        { size: 10, point: [130, 76]},
         { size: 5, point: [350, 200]},
-        { size: 15, point: [415, 280]},
-        { size: 34, point: [150, 400]},
-        { size: 34, point: [300, 150]}
+        { size: 10, point: [415, 280]},
+        { size: 30, point: [150, 400]},
+        { size: 30, point: [234, 76]},
+        { size: 30, point: [344, 12]},
+        { size: 20, point: [112, 76]},
+        { size: 20, point: [256, 12]},
+        { size: 30, point: [300, 150]}
       ];
   
       /* el lienzo ..................................................................... */
