@@ -2,10 +2,12 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
+import { BasicoPuntosComponent } from './ejemplos/basico-puntos/basico-puntos.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    BasicoPuntosComponent
   ],
   imports: [
     BrowserModule
