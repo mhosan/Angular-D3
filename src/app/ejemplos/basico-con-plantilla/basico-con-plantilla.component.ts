@@ -15,7 +15,7 @@ export class BasicoConPlantillaComponent implements OnInit {
     const alto = 500;
     const margen = 50;
     const dist_barras = 2;
-    const datos = [100, 500, 1000];
+    const datos = [100, 500, 1000, 154, 125, 785];
 
     const svg = d3.select('body').append('svg')
       .attr('width', ancho)
@@ -42,8 +42,21 @@ export class BasicoConPlantillaComponent implements OnInit {
       .attr("height", function (d) {
         return escalaY(d);                                                     // Calculamos la altura aplicandole la escala
       })
-      .attr("fill", "blue");                                                   // Los pintamos de azul  
-      
+      .attr("fill", "blue")                                                   // Los pintamos de azul  
+      .on('mouseover', (d, i, n)=>{
+        d3.select(n[i])
+        .transition()
+        .duration(200)
+        .ease(d3.easeCubic)
+        .attr("fill", "red")                                                   //  
+      })
+      .on('mouseout', (d, i, n)=>{
+        d3.select(n[i])
+        .transition()
+        .duration(1500)
+        .ease(d3.easeLinear)
+        .attr("fill", "blue")                                                   //  
+      })
       // Añadir Texto a las barras
       // Posicionadolo similarmente a las barras
       svg.selectAll("text")
@@ -65,10 +78,14 @@ export class BasicoConPlantillaComponent implements OnInit {
         .on('mouseover', (d, i, n)=>{
           d3.select(n[i])
           .attr("font-size", "50px")
+          .attr("fill", "red")
+          .attr("font-family", "Arial Black")
         })
         .on('mouseout', (d, i, n)=>{
           d3.select(n[i])
           .attr("font-size", "11px")
+          .attr("fill", "white")
+          .attr("font-family", "sans-serif")
         })
   }
 }
