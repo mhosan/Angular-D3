@@ -4,12 +4,14 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { BasicoPuntosComponent } from './ejemplos/basico-puntos/basico-puntos.component';
 import { BasicoConPlantillaComponent } from './ejemplos/basico-con-plantilla/basico-con-plantilla.component';
+import { TreeComponent } from './ejemplos/tree/tree.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     BasicoPuntosComponent,
-    BasicoConPlantillaComponent
+    BasicoConPlantillaComponent,
+    TreeComponent
   ],
   imports: [
     BrowserModule

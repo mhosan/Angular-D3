@@ -30,25 +30,23 @@ export class BasicoConPlantillaComponent implements OnInit {
     svg.selectAll('rect')
       .data(datos)
       .enter().append('rect')
-      .attr("x", function (d, i) {
+      .attr("x", (d, i)=> {
         return i * ((ancho - 2 * margen) / datos.length);
       })				                                                              // X calculamos el ancho automático en función
-                                                                              // del numero de valores y lo multiplicamos por la posición
-      .attr("y", function (d) {
+      .attr("y", (d)=> {
         return -escalaY(d);
       })				                                                               // Calculamos la aplicandole la escala e invirtiendola
       .attr("width", ((ancho - 2 * margen) / datos.length) - dist_barras)
-                                                                               // Calculamos el ancho en función del numero de valores
-      .attr("height", function (d) {
+      .attr("height", (d)=> {
         return escalaY(d);                                                     // Calculamos la altura aplicandole la escala
       })
       .attr("fill", "blue")                                                   // Los pintamos de azul  
       .on('mouseover', (d, i, n)=>{
         d3.select(n[i])
         .transition()
-        .duration(200)
+        .duration(0)
         .ease(d3.easeCubic)
-        .attr("fill", "red")                                                   //  
+        .attr("fill", (d,i)=> { return `hsl(${Math.random() * 360}, 100%, 40%)`})
       })
       .on('mouseout', (d, i, n)=>{
         d3.select(n[i])
@@ -57,19 +55,20 @@ export class BasicoConPlantillaComponent implements OnInit {
         .ease(d3.easeLinear)
         .attr("fill", "blue")                                                   //  
       })
+
       // Añadir Texto a las barras
       // Posicionadolo similarmente a las barras
       svg.selectAll("text")
         .data(datos)
         .enter().append("text")
-        .text(function(d) {
+        .text((d)=> {
           return d;
         })
         .attr("text-anchor", "middle")
-        .attr("x", function(d, i) {
+        .attr("x", (d, i)=> {
           return i * (( ancho - 2 * margen ) / datos.length) + (( ancho - 2 * margen ) / datos.length) / 2;
         })
-        .attr("y", function(d) {
+        .attr("y", (d)=> {
           return -escalaY(d) + 14;
         })
         .attr("font-family", "sans-serif")
