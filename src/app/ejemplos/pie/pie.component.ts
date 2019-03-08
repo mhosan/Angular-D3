@@ -11,12 +11,24 @@ export class PieComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    const datos = [100, 500, 1000, 154, 125, 785];
+    const datos = [1, 5, 10];
     const width = 900;
     const height = 600;
     const radius:number = Math.min(width, height)/2;
     const color:string[] = ['#98abc5', '#8a89a6','#7b6888','#6b486b','#ff3333','#00e600'];
     
+    var arc = d3.arc()
+      .outerRadius(radius - 10)
+      .innerRadius(0);
+
+  var labelArc = d3.arc()
+      .outerRadius(radius - 50)
+      .innerRadius(radius - 50);
+
+  var pie = d3.pie()
+      .sort(null)
+      .value((d)=> { return <any>d; });
+
     const svg = d3.select('body').append('svg')
       .attr('width', width)
       .attr('height', height)
@@ -24,30 +36,18 @@ export class PieComponent implements OnInit {
       .append('g')
       .attr('transform', `translate(${width / 2}, ${height / 2})`);
 
-    const arco = d3.arc()
-      .innerRadius(0)
-      .outerRadius(radius);
+      var g = svg.selectAll(".arc")
+      .data(pie(datos))
+    .enter().append("g")
+      .attr("class", "arc");  
     
-    const label = d3.arc()
-      .innerRadius(radius - 40)
-      .outerRadius(radius - 40);
-
-    const pie = d3.pie()(datos);
-
-    const arcs = svg.selectAll('arc')
-      .data(pie)
-      .enter()
-        .append('g')
-          .attr('class','arc');
-    
-    arcs.append('path')
+    g.append('path')
       .attr('fill', (d,i)=> { return color[i];} )
-      .attr('d', <any>arco);
+      .attr('d', <any>arc);
     
-    // arcs.append('text')
-    //   .attr('transform', (d, i)=>{ 
-    //     return `translate(${label.centroid(d[i])});`
-    //   })
-    //   .text((d, i)=>{ return datos[i]});
+    g.append('text')
+      .attr('transform', (d, i)=> { 
+          return `translate(${labelArc.centroid(<any>d)});`})
+      .text((d, i)=>{ console.log(datos[i]); return datos[i]});
   }
 }
