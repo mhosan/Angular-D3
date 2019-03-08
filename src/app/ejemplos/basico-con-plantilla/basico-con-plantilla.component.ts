@@ -51,7 +51,7 @@ export class BasicoConPlantillaComponent implements OnInit {
       .on('mouseout', (d, i, n)=>{
         d3.select(n[i])
         .transition()
-        .duration(1500)
+        .duration(500)
         .ease(d3.easeLinear)
         .attr("fill", "blue")                                                   //  
       })
