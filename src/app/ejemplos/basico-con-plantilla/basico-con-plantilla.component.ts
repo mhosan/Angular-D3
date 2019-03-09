@@ -40,51 +40,51 @@ export class BasicoConPlantillaComponent implements OnInit {
       .attr("height", (d)=> {
         return escalaY(d);                                                     // Calculamos la altura aplicandole la escala
       })
-      .attr("fill", "blue")                                                   // Los pintamos de azul  
-      .on('mouseover', (d, i, n)=>{
+      .attr("fill", 'blue')                                                   // Los pintamos de azul
+      .on('mouseover', (d, i, n)=> {
         d3.select(n[i])
         .transition()
         .duration(0)
         .ease(d3.easeCubic)
-        .attr("fill", (d,i)=> { return `hsl(${Math.random() * 360}, 100%, 40%)`})
+        .attr('fill', (d,i) => `hsl(${Math.random() * 360}, 100%, 40%)`);
       })
-      .on('mouseout', (d, i, n)=>{
+      .on('mouseout', (d, i, n) => {
         d3.select(n[i])
         .transition()
         .duration(500)
         .ease(d3.easeLinear)
-        .attr("fill", "blue")                                                   //  
-      })
+        .attr('fill', 'blue');                                                   //
+      });
 
       // Añadir Texto a las barras
       // Posicionadolo similarmente a las barras
-      svg.selectAll("text")
+      svg.selectAll('text')
         .data(datos)
-        .enter().append("text")
-        .text((d)=> {
+        .enter().append('text')
+        .text((d) => {
           return d;
         })
-        .attr("text-anchor", "middle")
-        .attr("x", (d, i)=> {
+        .attr('text-anchor', 'middle')
+        .attr('x', (d, i) => {
           return i * (( ancho - 2 * margen ) / datos.length) + (( ancho - 2 * margen ) / datos.length) / 2;
         })
-        .attr("y", (d)=> {
+        .attr('y', (d) => {
           return -escalaY(d) + 14;
         })
-        .attr("font-family", "sans-serif")
-        .attr("font-size", "11px")
-        .attr("fill", "white")
-        .on('mouseover', (d, i, n)=>{
+        .attr('font-family', 'sans-serif')
+        .attr('font-size', '11px')
+        .attr('fill', 'white')
+        .on('mouseover', (d, i, n) => {
           d3.select(n[i])
-          .attr("font-size", "50px")
-          .attr("fill", "red")
-          .attr("font-family", "Arial Black")
+          .attr('font-size', '50px')
+          .attr('fill', 'red')
+          .attr('font-family', 'Arial Black');
         })
-        .on('mouseout', (d, i, n)=>{
+        .on('mouseout', (d, i, n) => {
           d3.select(n[i])
-          .attr("font-size", "11px")
-          .attr("fill", "white")
-          .attr("font-family", "sans-serif")
-        })
+          .attr('font-size', '11px')
+          .attr('fill', 'white')
+          .attr('font-family', 'sans-serif');
+        });
   }
 }
