@@ -23,30 +23,32 @@ export class BasicoConPlantillaComponent implements OnInit {
       .append('g')
       .attr('transform', `translate(${margen}, ${alto - margen})`);
 
-    var escalaY = d3.scaleLinear()
+    const escalaY = d3.scaleLinear()
       .domain([0, d3.max(datos)])
       .range([0, alto - 2 * margen]);
 
     svg.selectAll('rect')
       .data(datos)
       .enter().append('rect')
-      .attr("x", (d, i)=> {
+      .attr('x', (d, i) => {
         return i * ((ancho - 2 * margen) / datos.length);
       })				                                                              // X calculamos el ancho automático en función
-      .attr("y", (d)=> {
+      .attr('y', (d) => {
         return -escalaY(d);
       })				                                                               // Calculamos la aplicandole la escala e invirtiendola
-      .attr("width", ((ancho - 2 * margen) / datos.length) - dist_barras)
-      .attr("height", (d)=> {
+      .attr('width', ((ancho - 2 * margen) / datos.length) - dist_barras)
+      .attr('height', (d) => {
         return escalaY(d);                                                     // Calculamos la altura aplicandole la escala
       })
-      .attr("fill", 'blue')                                                   // Los pintamos de azul
-      .on('mouseover', (d, i, n)=> {
+      .attr('fill', 'blue')                                                   // Los pintamos de azul
+      .on('mouseover', (d, i, n) => {
         d3.select(n[i])
         .transition()
         .duration(0)
         .ease(d3.easeCubic)
-        .attr('fill', (d,i) => `hsl(${Math.random() * 360}, 100%, 40%)`);
+        .attr('fill', () => {
+          return `hsl(${Math.random() * 360}, 100%, 40%)`;
+        });
       })
       .on('mouseout', (d, i, n) => {
         d3.select(n[i])
