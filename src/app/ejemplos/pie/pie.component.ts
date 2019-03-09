@@ -36,8 +36,7 @@ export class PieComponent implements OnInit {
 
     const arcs = svg.selectAll('arc')
       .data(pie)
-      .enter()
-        .append('g')
+      .enter().append('g')
           .attr('class','arc');
     
     arcs.append('path')
@@ -45,9 +44,15 @@ export class PieComponent implements OnInit {
       .attr('d', <any>arco);
     
     // arcs.append('text')
-    //   .attr('transform', (d, i)=>{ 
-    //     return `translate(${label.centroid(d[i])});`
+    //   .attr('transform', (d)=>{
+    //     let c = label.centroid(<any>d); 
+    //     console.log(c);
+    //     return `translate(${c[0]}, ${c[1]});`
     //   })
     //   .text((d, i)=>{ return datos[i]});
+      arcs.append('text')
+      .attr('transform', (d)=>{return `translate(${label.centroid(<any>d)});`})
+      //.text((d, i)=>{ return datos[i]});
+      .text((d, i)=>{ return 'pepe'});
   }
 }
