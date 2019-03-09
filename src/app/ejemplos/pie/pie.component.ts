@@ -11,12 +11,12 @@ export class PieComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    const datos = [100, 500, 1000, 154, 125, 785];
+    const datos = [100, 500, 800, 154, 125, 785];
     const width = 550;
     const height = 400;
-    const radius:number = Math.min(width, height)/2;
-    const color:string[] = ['#98abc5', '#8a89a6','#7b6888','#6b486b','#ff3333','#00e600'];
-    
+    const radius: number = Math.min(width, height) / 2;
+    const color: string[] = ['#98abc5', '#8a89a6', '#7b6888', '#6b486b', '#ff3333', '#00e600'];
+
     const svg = d3.select('body').append('svg')
       .attr('width', width)
       .attr('height', height)
@@ -27,7 +27,7 @@ export class PieComponent implements OnInit {
     const arco = d3.arc()
       .innerRadius(0)
       .outerRadius(radius);
-    
+
     const label = d3.arc()
       .innerRadius(radius - 70)
       .outerRadius(radius - 70);
@@ -38,13 +38,17 @@ export class PieComponent implements OnInit {
       .data(pie)
       .enter().append('g')
           .attr('class', 'arc');
-    
+
     arcs.append('path')
-      .attr('fill', (d,i)=> { return color[i];} )
+      .attr('fill', (d, i) => color[i] )
       .attr('d', <any>arco);
 
     arcs.append('text')
       .attr('transform', (d) => 'translate(' + label.centroid(<any>d) + ')')
+      .attr('font-family', 'Arial')
+      .attr('font-size', '18px')
+      .attr('fill', 'black')
+      .attr('text-anchor', 'middle')
       .text((d, i) => datos[i]);
   }
 }
