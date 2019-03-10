@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import * as d3 from 'd3';
 
 @Component({
-  selector: 'app-basico-con-plantilla',
-  templateUrl: './basico-con-plantilla.component.html',
-  styleUrls: ['./basico-con-plantilla.component.css']
+  selector: 'app-barras',
+  templateUrl: './barras.component.html',
+  styleUrls: ['./barras.component.css']
 })
-export class BasicoConPlantillaComponent implements OnInit {
+export class BarrasComponent implements OnInit {
 
   constructor() { }
 
@@ -46,9 +46,7 @@ export class BasicoConPlantillaComponent implements OnInit {
         .transition()
         .duration(0)
         .ease(d3.easeCubic)
-        .attr('fill', () => {
-          return `hsl(${Math.random() * 360}, 100%, 40%)`;
-        });
+        .attr('fill', () => `hsl(${Math.random() * 360}, 100%, 40%)`);
       })
       .on('mouseout', (d, i, n) => {
         d3.select(n[i])

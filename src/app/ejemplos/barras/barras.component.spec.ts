@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { BasicoConPlantillaComponent } from './basico-con-plantilla.component';
+import { BarrasComponent } from './barras.component';
 
 describe('BasicoConPlantillaComponent', () => {
-  let component: BasicoConPlantillaComponent;
-  let fixture: ComponentFixture<BasicoConPlantillaComponent>;
+  let component: BarrasComponent;
+  let fixture: ComponentFixture<BarrasComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ BasicoConPlantillaComponent ]
+      declarations: [ BarrasComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(BasicoConPlantillaComponent);
+    fixture = TestBed.createComponent(BarrasComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

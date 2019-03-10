@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { BasicoPuntosComponent } from './basico-puntos.component';
+import { PuntosComponent } from './puntos.component';
 
 describe('BasicoPuntosComponent', () => {
-  let component: BasicoPuntosComponent;
-  let fixture: ComponentFixture<BasicoPuntosComponent>;
+  let component: PuntosComponent;
+  let fixture: ComponentFixture<PuntosComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ BasicoPuntosComponent ]
+      declarations: [ PuntosComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(BasicoPuntosComponent);
+    fixture = TestBed.createComponent(PuntosComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
