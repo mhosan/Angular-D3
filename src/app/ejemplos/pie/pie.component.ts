@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import * as d3 from 'd3';
 
 @Component({
   selector: 'app-pie',
+  encapsulation: ViewEncapsulation.None,  
   templateUrl: './pie.component.html',
   styleUrls: ['./pie.component.css']
 })
@@ -17,7 +18,7 @@ export class PieComponent implements OnInit {
     const radius: number = Math.min(width, height) / 2;
     const color: string[] = ['#98abc5', '#8a89a6', '#7b6888', '#6b486b', '#ff3333', '#00e600'];
 
-    const svg = d3.select('body').append('svg')
+    const svg = d3.select('#torta').append('svg')
       .attr('width', width)
       .attr('height', height)
       .data(datos)
@@ -29,8 +30,8 @@ export class PieComponent implements OnInit {
       .outerRadius(radius);
 
     const label = d3.arc()
-      .innerRadius(radius - 70)
-      .outerRadius(radius - 70);
+      .innerRadius(radius - 80)
+      .outerRadius(radius - 80);
 
     const pie = d3.pie()(datos);
 
