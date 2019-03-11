@@ -16,35 +16,47 @@ export class LineasComponent implements OnInit {
       { 'x': 48.13, 'y': 73.34 },
       { 'x': 68.13, 'y': 43.34 },
     ];
-
     // Establecemos las dimensiones y los márgenes del gráfico
     const margin = { top: 30, right: 20, bottom: 20, left: 20 },
-      width = 680 - margin.left - margin.right,
-      height = 315 - margin.top - margin.bottom;
+      width = 600 - margin.left - margin.right,
+      height = 600 - margin.top - margin.bottom;
+    // Creamos la figura svg
+    const svg = d3.select(".container").append("svg")
+       .attr("width", width + margin.left + margin.right)
+       .attr("height", height + margin.top + margin.bottom)
+       .data(datos);
+    const chart = svg.append("g")
+       .attr("transform",
+         "translate(" + 20 + "," + 60 + ")");
+    const yScale = d3.scaleLinear()
+       .domain([0, 100])
+       .range([0, 400]);
+    const xScale = d3.scaleLinear()
+      .domain([0,100])
+      .range([0, 600]);
 
+    chart.append('g')
+      .call(d3.axisTop(xScale),);
+    chart.append('g')
+      .call(d3.axisLeft(yScale));
+    chart.selectAll()
+      .data(datos)
+      .enter()
+      .append('rect')
+      .attr('x', (d) => xScale(d.x))
+      .attr('y', (d) => yScale(-d.y))
+      .attr('height', (d) => height - yScale(d.y))
+      .attr('width', width);
+    
     // Establecemos las escalas y sus rangos a lo largo de los ejes x y (año, mes, dia)
     // const x = d3.scaleTime()
     //   .range([0, width])
     //   .domain([new Date(2000, 12, 24), new Date(2019, 12, 24)]);  //x.invert(200) = Date 2012-09-10T22:00:00.000Z,  x.invert(640)= 2017-02-02T22:00:00.000Z
-    const x = d3.scaleLinear()
-      .domain([0, 1000])
-      .range([0.100]);
-    const y = d3.scaleLinear()
-      .domain([0, 1000])
-      .range([0, 100]);
+    // const x = d3.scaleLinear()
+    //   .domain([0, 1000])
+    //   .range([0.100]);
 
-    const ejeX = 
-
-    // Creamos la figura svg
-    // const svg = d3.select(".container").append("svg")
-    //   .attr("width", width + margin.left + margin.right)
-    //   .attr("height", height + margin.top + margin.bottom)
-    //   .attr('background-color', 'blue');
-
-
-    // const g = svg.append("g")
-    //   .attr("transform",
-    //     "translate(" + margin.left + "," + margin.top + ")");
+    // const ejeX = 
 
     // let fecha:string[]=[];
     // let valor:number[]=[];
