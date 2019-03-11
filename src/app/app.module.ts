@@ -6,6 +6,7 @@ import { PuntosComponent } from './ejemplos/puntos/puntos.component';
 import { BarrasComponent } from './ejemplos/barras/barras.component';
 import { TreeComponent } from './ejemplos/tree/tree.component';
 import { PieComponent } from './ejemplos/pie/pie.component';
+import { LineasComponent } from './ejemplos/lineas/lineas.component';
 
 @NgModule({
   declarations: [
@@ -13,7 +14,8 @@ import { PieComponent } from './ejemplos/pie/pie.component';
     PuntosComponent,
     BarrasComponent,
     TreeComponent,
-    PieComponent
+    PieComponent,
+    LineasComponent
   ],
   imports: [
     BrowserModule

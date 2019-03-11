@@ -1,9 +1,8 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import * as d3 from 'd3';
 
 @Component({
   selector: 'app-pie',
-  encapsulation: ViewEncapsulation.None,  
   templateUrl: './pie.component.html',
   styleUrls: ['./pie.component.css']
 })
@@ -12,7 +11,7 @@ export class PieComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    const datos = [100, 500, 800, 154, 125, 785];
+    const datos = [100, 500, 800, 154, 125, 600];
     const width = 550;
     const height = 400;
     const radius: number = Math.min(width, height) / 2;
