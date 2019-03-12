@@ -10,44 +10,68 @@ export class LineasComponent implements OnInit {
 
   constructor() { }
   ngOnInit() {
+    // Establecemos las dimensiones y los márgenes del gráfico
+    const margin = { top: 30, right: 20, bottom: 20, left: 20 },
+      width = 600 - margin.left - margin.right,
+      height = 600 - margin.top - margin.bottom;
+
     const datos = [
       { 'x': 58.13, 'y': 23.34 },
       { 'x': 18.13, 'y': 83.34 },
       { 'x': 48.13, 'y': 73.34 },
       { 'x': 68.13, 'y': 43.34 },
     ];
-    // Establecemos las dimensiones y los márgenes del gráfico
-    const margin = { top: 30, right: 20, bottom: 20, left: 20 },
-      width = 600 - margin.left - margin.right,
-      height = 600 - margin.top - margin.bottom;
-    // Creamos la figura svg
-    const svg = d3.select(".container").append("svg")
-       .attr("width", width + margin.left + margin.right)
-       .attr("height", height + margin.top + margin.bottom)
-       .data(datos);
-    const chart = svg.append("g")
-       .attr("transform",
-         "translate(" + 20 + "," + 60 + ")");
+    const xScale = d3.scaleTime()
+      //.domain([0, 100])
+      .range([0, width]);
     const yScale = d3.scaleLinear()
-       .domain([0, 100])
-       .range([0, 400]);
-    const xScale = d3.scaleLinear()
-      .domain([0,100])
-      .range([0, 600]);
+      .domain([0, 100])
+      .range([height, 0]);
+    //Creamos el eje X, formateando las fechas
+    const xAxis = d3.axisBottom(xScale)
+      .tickFormat(d3.timeFormat("%Y-%m-%d"));
 
-    chart.append('g')
-      .call(d3.axisTop(xScale),);
-    chart.append('g')
-      .call(d3.axisLeft(yScale));
-    chart.selectAll()
-      .data(datos)
-      .enter()
-      .append('rect')
-      .attr('x', (d) => xScale(d.x))
-      .attr('y', (d) => yScale(-d.y))
-      .attr('height', (d) => height - yScale(d.y))
-      .attr('width', width);
+    // Creamos la figura svg
+    const svg = d3.select("#container").append("svg")
+      .attr("width", width + margin.left + margin.right)
+      .attr("height", height + margin.top + margin.bottom)
+      .data(datos);
+    const g = svg.append("g")
+      .attr("transform","translate(" + margin.left + "," + margin.top + ")");
+
+    // Parser para las fechas (por ejemplo: 1-May-12)
+    const parseTime = d3.timeParse("%d-%b-%y");
     
+    // Añadimos los ejes
+    g.append("g")
+        .attr('transform','translate(' + 2 + ',' + (height - margin.top) + ')')
+        .call(xAxis)
+        .selectAll("text")
+          .style("text-anchor", "end")
+          .attr("dx", "-.8em")
+          .attr("dy", ".15em")
+          .attr("transform", function(d) {
+              return "rotate(-90)"
+              });
+
+    g.append("g")
+      .attr('transform','translate(' + 3 + ',' + -30 + ')')
+      .call(d3.axisLeft(yScale)
+    );
+
+    // g.append('g')
+    //   .call(d3.axisTop(xScale));
+    // g.append('g')
+    //   .call(d3.axisLeft(yScale));
+    // g.selectAll()
+    //   .data(datos)
+    //   .enter()
+    //   .append('rect')
+    //   .attr('x', (d) => xScale(d.x))
+    //   .attr('y', (d) => yScale(-d.y))
+    //   .attr('height', (d) => height - yScale(d.y))
+    //   .attr('width', width);
+
     // Establecemos las escalas y sus rangos a lo largo de los ejes x y (año, mes, dia)
     // const x = d3.scaleTime()
     //   .range([0, width])
@@ -76,14 +100,6 @@ export class LineasComponent implements OnInit {
 
     // const pepe = 'nada';
 
-
-    // Compilamos un parser para las fechas (por ejemplo: 1-May-12)
-    // const parseTime = d3.timeParse("%d-%b-%y");
-
-    // Creamos el eje X, formateando las fechas
-    // const xAxis = d3.axisBottom(x)
-    //  .tickFormat(d3.timeFormat("%Y-%m-%d"));
-
     // // Obtenemos los datos
     // // url = "https://gist.githubusercontent.com/d3noob/402dd382a51a4f6eea487f9a35566de0/raw/6369502941b44261f381399a24fb455cb4290be8/data.csv";
     // d3.csv('datos.csv'), (error, data) => {
@@ -110,22 +126,6 @@ export class LineasComponent implements OnInit {
     //     .data([data])
     //     .attr("class", "line")
     //     .attr("d", this.valueline);
-
-    // // Añadimos los ejes
-    // svg.append("g")
-    //     .attr("transform", "translate(0," + height + ")")
-    //     .call(xAxis)
-    //     .selectAll("text")
-    //       .style("text-anchor", "end")
-    //       .attr("dx", "-.8em")
-    //       .attr("dy", ".15em")
-    //       .attr("transform", function(d) {
-    //           return "rotate(-40)"
-    //           });
-
-    // svg.append("g")
-    //     .call(d3.axisLeft(y));
-    // });
   }
 
 }
