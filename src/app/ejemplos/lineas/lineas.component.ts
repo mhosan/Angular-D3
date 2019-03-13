@@ -76,16 +76,16 @@ export class LineasComponent implements OnInit {
 
     // Añadimos los ejes
     g.append('g')
-        .attr('transform', 'translate(' + 0 + ',' + (height + 15) + ')')
-        .call(xAxis)
-        .selectAll('text')
-          .style('text-anchor', 'end')
-          // .attr('dx', '-.8em')
-          .attr('dx', '.2em')
-          .attr('dy', '0em')
-          .attr('transform', function(d) {
-              return 'rotate(-1)';
-              });
+      .attr('transform', 'translate(' + 0 + ',' + (height + 15) + ')')
+      .call(xAxis)
+      .selectAll('text')
+      .style('text-anchor', 'end')
+      // .attr('dx', '-.8em')
+      .attr('dx', '.2em')
+      .attr('dy', '0em')
+      .attr('transform', function (d) {
+        return 'rotate(-1)';
+      });
 
     g.append('g')
       .attr('transform', 'translate(' + 14 + ',' + 0 + ')')
@@ -96,16 +96,29 @@ export class LineasComponent implements OnInit {
     const linea = d3.line<IDatos>()
       .x((d: IDatos) => xScale(d.fecha))
       .y((d: IDatos) => yScale(d.valor))
-      .curve(curveLinear);                         // tipo de curva:  curveLinear: lineal abierta
-                                                  //                curveLinearClosed: lineal cerrada
-                                                  //                curveBasis y curveBasisClosed: Un spline-b con puntos de control duplicados en el final
+      .curve(curveLinear);
+                            // tipo de curva:  curveLinear: lineal abierta
+    //                curveLinearClosed: lineal cerrada
+    //                curveBasis y curveBasisClosed: Un spline-b con puntos de control duplicados en el final
     // console.log(linea);
     // Añadimos y estilizamos la línea
     g.append('path')
       .attr('d', linea(datos))
       .attr('stroke', 'blue')
       .attr('stroke-width', 2)
-      .attr('fill', 'none');
+      .attr('fill', 'none')
+      .on('mouseover', (d, i, n) => {
+        d3.select(n[i])
+          .transition()
+          .duration(0)
+          .attr('stroke-width', 8);
+      })
+      .on('mouseout', (d, i, n) => {
+        d3.select(n[i])
+          .transition()
+          .duration(300)
+          .attr('stroke-width', 2);
+      })
 
     // Establecemos las escalas y sus rangos a lo largo de los ejes x y (año, mes, dia)
     // const x = d3.scaleTime()

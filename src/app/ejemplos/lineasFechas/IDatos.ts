@@ -1,4 +1,6 @@
 export interface IDatos {
-    fecha: Number;
+    fecha: Date;
     valor: Number;
 }
+
+
