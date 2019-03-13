@@ -36,7 +36,7 @@ export class PuntosComponent implements OnInit {
 
       /* el lienzo ..................................................................... */
       const svgWidth = 900;
-      const svgHeight = 600;
+      const svgHeight = 450;
       const svg = d3.select('#svg')
         .append('svg')
         .attr('width', svgWidth)

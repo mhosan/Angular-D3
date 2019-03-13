@@ -15,7 +15,7 @@ export class LineasComponent implements OnInit {
     // Establecemos las dimensiones y los márgenes del gráfico
     const margin = { top: 30, right: 20, bottom: 20, left: 20 },
       width = 600 - margin.left - margin.right,
-      height = 600 - margin.top - margin.bottom;
+      height = 500 - margin.top - margin.bottom;
 
     // const datos = [
     //   { 'fecha': new Date (2012, 3, 12), 'valor': 58.13 },
@@ -62,7 +62,7 @@ export class LineasComponent implements OnInit {
     const xAxis = d3.axisTop(xScale);
     const yAxis = d3.axisRight(yScale).ticks(6);
     // Creamos la figura svg
-    const svg = d3.select('#container').append('svg')
+    const svg = d3.select('#lineas').append('svg')
       .attr('width', width + margin.left + margin.right)
       .attr('height', height + margin.top + margin.bottom)
       .data(datos);

@@ -17,7 +17,7 @@ export class BarrasComponent implements OnInit {
     const dist_barras = 2;
     const datos = [100, 500, 1000, 154, 125, 785];
 
-    const svg = d3.select('body').append('svg')
+    const svg = d3.select('#container').append('svg')
       .attr('width', ancho)
       .attr('height', alto)
       .append('g')
