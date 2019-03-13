@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import * as d3 from 'd3';
 import { IDatos } from '../lineasFechas/IDatos';
-import { curveBundle, curveBasis, curveBasisClosed, curveLinearClosed, curveLinear } from 'd3';
+import { curveBundle, curveBasis, curveBasisClosed, curveLinearClosed, curveLinear, bisect } from 'd3';
+import { getLocaleDateFormat } from '@angular/common';
 
 @Component({
   selector: 'app-lineas',
@@ -27,7 +28,7 @@ export class LineasFechasComponent implements OnInit {
       .domain([new Date(2018, 12, 31), new Date(2019, 4, 30)])
       .range([0, width]);
     const xAxis = d3.axisBottom(xScale);
-      //.tickFormat(d3.timeFormat("%d-%m-%Y"));
+    //.tickFormat(d3.timeFormat("%d-%m-%Y"));
 
     const maxY = d3.max(datosMinima, d => d.valor);
     const minY = d3.min(datosMinima, d => d.valor);
@@ -52,7 +53,7 @@ export class LineasFechasComponent implements OnInit {
 
     // Añadimos los ejes
     g.append('g')
-      .attr('transform', 'translate(' +(margin.left + 100) + ',' + (height + 0) + ')')
+      .attr('transform', 'translate(' + (margin.left + 100) + ',' + (height + 0) + ')')
       .call(xAxis)
       .selectAll('text')
       .style('text-anchor', 'end')
@@ -70,50 +71,77 @@ export class LineasFechasComponent implements OnInit {
       .x((d) => xScale(d.fecha) - margin.left)
       .y((d) => yScale(d.valor) + margin.top);
 
+    let tooltip = d3.select('#lineas')
+      .append('div')
+      .style('position', 'absolute')
+      .style('z-index', '9999999')
+      .style('visibility', 'hidden')
+      .style('background', '#e0e0eb')
+      .text('Un tooltip simple');
+
     svg.append('path')
+      .data(datosMinima)
       .attr('d', linea(datosMinima))
       .attr('stroke', 'green')
       .attr('stroke-width', 3)
-      .attr('fill', 'none');
-      // .on('mouseover', (d, i, n) => {
-      //   d3.select(n[i])
-      //     .transition()
-      //     .duration(0)
-      //     .attr('stroke-width', 10);
+      .attr('fill', 'none')
+      // .on('mouseover', (d) => {
+      //   tooltip.text(<any>d.valor);
+      //   console.log(tooltip.text())
+      //   return tooltip.style('visibility', 'visible')
       // })
-      // .on('mouseout', (d, i, n) => {
-      //   d3.select(n[i])
-      //     .transition()
-      //     .duration(600)
-      //     //.ease(d3.easeElasticOut) 
-      //     .attr('stroke-width', 3);
+      // .on('mousemove', () => {
+      //   return tooltip
+      //           .style('top', (d3.event.pageY - 150) + 'px')
+      //           .style('left',(d3.event.pageX - 100) + 'px');
+      // })
+      // .on('mouseout', ()=>{ 
+      //   return tooltip
+      //           .style('visibility', 'hidden')
       // });
+
+    //   d3.select(n[i])
+    //     .transition()
+    //     .duration(0)
+    //     .attr('stroke-width', 10);
+    // })
+    // .on('mouseout', (d, i, n) => {
+    //   d3.select(n[i])
+    //     .transition()
+    //     .duration(600)
+    //     //.ease(d3.easeElasticOut) 
+    //     .attr('stroke-width', 3);
+    // });
 
     const circle = svg.selectAll('circle')
       .data(datosMinima)
       .enter()
       .append('circle');
     circle
-      .attr('cx', d => xScale(d.fecha)- margin.left)
-      .attr('cy', d => yScale(d.valor)+ margin.top)
+      .attr('cx', d => xScale(d.fecha) - margin.left)
+      .attr('cy', d => yScale(d.valor) + margin.top)
       .attr('style', 'fill:blue')
-      // .attr('style', (d) => {
-      //   if (d.size > 5) {
-      //     return 'fill: blue;';
-      //   }
-      //   return 'fill: red;';
-      // })
       .attr('r', 5)
       .on('mouseover', (d, i, n) => {
         d3.select(n[i])
           .attr('r', () => { return 15 })
-          .attr('style', 'fill:red');
-        })
+          .attr('style', 'fill:red')
+          tooltip.text(<any>d.fecha + ', ' + <any>d.valor)
+          return tooltip.style('visibility', 'visible')
+      })
+      .on('mousemove', () => {
+        return tooltip
+                .style('top', (d3.event.pageY - 190) + 'px')
+                .style('left',(d3.event.pageX - 100) + 'px');
+      })
       .on('mouseout', (d, i, n) => {
         d3.select(n[i])
           .attr('r', 5)
-          .attr('style', 'fill:blue');
+          .attr('style', 'fill:blue')
+          tooltip
+            .style('visibility', 'hidden')
       });
+
 
   }
 }
