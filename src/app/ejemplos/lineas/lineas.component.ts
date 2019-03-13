@@ -36,6 +36,7 @@ export class LineasComponent implements OnInit {
     //   { 'fecha': 76, 'valor': 68.13 }
     // ];
     const datos = [
+      { 'fecha': 0, 'valor': 0 },
       { 'fecha': 20, 'valor': 30 },
       { 'fecha': 20, 'valor': 50 },
       { 'fecha': 30, 'valor': 30 },
@@ -54,13 +55,13 @@ export class LineasComponent implements OnInit {
     const maxY = d3.max(datos, d => d.valor);
     const minY = d3.min(datos, d => d.valor);
     const yScale = d3.scaleLinear()
-      .domain([minY - 5, maxY + 2])
+      .domain([maxY + 5, minY + 0])
       .range([0, height]);
     // Creamos el eje X, formateando las fechas
     // const xAxis = d3.axisBottom(xScale)
     //  .tickFormat(d3.timeFormat("%d-%m-%Y"));
     const xAxis = d3.axisTop(xScale);
-    const yAxis = d3.axisRight(yScale).ticks(6);
+    const yAxis = d3.axisLeft(yScale).ticks(10);
     // Creamos la figura svg
     const svg = d3.select('#lineas').append('svg')
       .attr('width', width + margin.left + margin.right)
@@ -74,18 +75,19 @@ export class LineasComponent implements OnInit {
 
     // Añadimos los ejes
     g.append('g')
-        .attr('transform', 'translate(' + 2 + ',' + (height) + ')')
+        .attr('transform', 'translate(' + 0 + ',' + (height + 15) + ')')
         .call(xAxis)
         .selectAll('text')
           .style('text-anchor', 'end')
-          .attr('dx', '-.8em')
-          .attr('dy', '.12em')
+          // .attr('dx', '-.8em')
+          .attr('dx', '.2em')
+          .attr('dy', '0em')
           .attr('transform', function(d) {
-              return 'rotate(-50)';
+              return 'rotate(-1)';
               });
 
     g.append('g')
-      .attr('transform', 'translate(' + -5 + ',' + 0 + ')')
+      .attr('transform', 'translate(' + 14 + ',' + 0 + ')')
       // .call(d3.axisLeft(yScale)
       .call(yAxis);
     // );
