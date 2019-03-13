@@ -8,11 +8,13 @@ import { BarrasComponent } from './ejemplos/barras/barras.component';
 import { TreeComponent } from './ejemplos/tree/tree.component';
 import { PieComponent } from './ejemplos/pie/pie.component';
 import { LineasComponent } from './ejemplos/lineas/lineas.component';
+import { LineasFechasComponent } from './ejemplos/lineasFechas/lineas.component';
 import { EncabezadoComponent } from './encabezado/encabezado.component';
 
 const routes: Routes = [
   { path: 'barras', component: BarrasComponent },
   { path: 'lineas', component: LineasComponent },
+  { path: 'lineasFechas', component: LineasFechasComponent },
   { path: 'tortas', component: PieComponent },
   { path: 'puntos', component: PuntosComponent },
   { path: '', component: PuntosComponent, pathMatch: 'full' },
@@ -27,7 +29,8 @@ const routes: Routes = [
     BarrasComponent,
     TreeComponent,
     PieComponent,
-    LineasComponent
+    LineasComponent,
+    LineasFechasComponent
   ],
   imports: [
     BrowserModule,

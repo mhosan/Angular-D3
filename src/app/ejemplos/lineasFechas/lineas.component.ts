@@ -1,6 +1,6 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import * as d3 from 'd3';
-import { IDatos } from '../lineas/datos';
+import { IDatos } from '../lineasFechas/datos';
 import { curveBundle, curveBasis, curveBasisClosed, curveLinearClosed, curveLinear } from 'd3';
 
 @Component({
@@ -8,8 +8,7 @@ import { curveBundle, curveBasis, curveBasisClosed, curveLinearClosed, curveLine
   templateUrl: './lineas.component.html',
   styleUrls: ['./lineas.component.css']
 })
-export class LineasComponent implements OnInit {
-  @Input() private data: Array<any>;
+export class LineasFechasComponent implements OnInit {
   constructor() { }
   ngOnInit() {
     // Establecemos las dimensiones y los márgenes del gráfico
