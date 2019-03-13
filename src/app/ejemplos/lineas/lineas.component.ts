@@ -21,33 +21,33 @@ export class LineasComponent implements OnInit {
       width = 600 - margin.left - margin.right,
       height = 600 - margin.top - margin.bottom;
     // Creamos la figura svg
-    const svg = d3.select(".container").append("svg")
-       .attr("width", width + margin.left + margin.right)
-       .attr("height", height + margin.top + margin.bottom)
+    const svg = d3.select('.container').append('svg')
+       .attr('width', width + margin.left + margin.right)
+       .attr('height', height + margin.top + margin.bottom)
        .data(datos);
-    const chart = svg.append("g")
-       .attr("transform",
-         "translate(" + 20 + "," + 60 + ")");
+    const chart = svg.append('g')
+       .attr('transform',
+         'translate(' + 20 + ',' + 60 + ')');
     const yScale = d3.scaleLinear()
        .domain([0, 100])
        .range([0, 400]);
     const xScale = d3.scaleLinear()
-      .domain([0,100])
+      .domain([0, 100])
       .range([0, 600]);
 
     chart.append('g')
-      .call(d3.axisTop(xScale),);
+      .call(d3.axisTop(xScale), );
     chart.append('g')
       .call(d3.axisLeft(yScale));
-    chart.selectAll()
-      .data(datos)
-      .enter()
-      .append('rect')
-      .attr('x', (d) => xScale(d.x))
-      .attr('y', (d) => yScale(-d.y))
-      .attr('height', (d) => height - yScale(d.y))
-      .attr('width', width);
-    
+    // chart.selectAll()
+    //   .data(datos)
+    //   .enter()
+    //   .append('rect')
+    //   .attr('x', (d) => xScale(d.x))
+    //   .attr('y', (d) => yScale(-d.y))
+    //   .attr('height', (d) => height - yScale(d.y))
+    //   .attr('width', width);
+
     // Establecemos las escalas y sus rangos a lo largo de los ejes x y (año, mes, dia)
     // const x = d3.scaleTime()
     //   .range([0, width])
@@ -56,7 +56,7 @@ export class LineasComponent implements OnInit {
     //   .domain([0, 1000])
     //   .range([0.100]);
 
-    // const ejeX = 
+    // const ejeX =
 
     // let fecha:string[]=[];
     // let valor:number[]=[];
