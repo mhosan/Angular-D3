@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import * as d3 from 'd3';
 import { IDatos } from '../lineasFechas/IDatos';
-import { curveBundle, curveBasis, curveBasisClosed, curveLinearClosed, curveLinear, bisect } from 'd3';
-import { getLocaleDateFormat } from '@angular/common';
+import { curveBundle, curveBasis, curveBasisClosed, curveLinearClosed, curveLinear, bisect, style } from 'd3';
 
 @Component({
   selector: 'app-lineas',
@@ -36,15 +35,16 @@ export class LineasFechasComponent implements OnInit {
     const xScale = d3.scaleTime()
       .domain([new Date(2019, 0, 20), new Date(2019, 4 - 1, 30)])
       .range([0, width]);
+    //definir el eje X y formatear las fechas ---------------------------------------------------------------
     const xAxis = d3.axisBottom(xScale)
       .tickFormat(d3.timeFormat("%d-%m-%Y"));
-    //definir la escala y el eje X --------------------------------------------------------------------------
+
 
     //definir la escala y el eje Y --------------------------------------------------------------------------
-    //const maxY = (d3.max(datosMaxima, d => d.valor + 40));
-    const maxY = 250;
-    //const minY = d3.min(datosMinima, d => d.valor);
-    const minY = 20;
+    const maxY = (d3.max(datosMaxima, d => d.valor));
+    //const maxY = 250;
+    const minY = d3.min(datosMinima, d => d.valor);
+    //const minY = 20;
     const yScale = d3.scaleLinear()
       .domain([maxY, minY])
       .range([0, height]);
@@ -69,15 +69,33 @@ export class LineasFechasComponent implements OnInit {
       .attr('dy', '0em')
       .attr('transform', function (d) {
         return 'rotate(-30)';
-      });
+      })
+      // .append('text')
+      // .attr('x', )
+      // .attr('dx', '1.0em')
+      // .style('text-anchor', 'end')
+      // .attr('font-family', 'Arial')
+      // .attr('font-size', '12px')
+      // .attr('fill', 'black')
+      // //.text('Presión arterial (mmHg)');
+      // .text('Eje X (fechas)');
 
 
     //eje Y <------------------------------------------------------------------
     g.append('g')
       .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')')
-      .call(yAxis);
+      .call(yAxis)
+      .append('text')
+      .attr('transform', 'rotate(-90)')
+      .attr('y', 0)
+      .attr('dy', '1.00em')
+      .style('text-anchor', 'end')
+      .attr('font-family', 'Arial')
+      .attr('font-size', '12px')
+      .attr('fill', 'black')
+      //.text('Presión arterial (mmHg)');
+      .text('Eje Y (mmHg)');
 
-    
     const formatoFechaLocal = d3.timeFormat("%d-%m-%Y")
     const formatAnio = d3.timeFormat('%Y');
     const formatMes = d3.timeFormat('%b');
@@ -106,6 +124,17 @@ export class LineasFechasComponent implements OnInit {
       .attr('stroke', '#2eb82e')
       .attr('stroke-width', 1)
       .attr('fill', 'none')
+      .style('opacity', '0.50' )
+      .on('mouseover', (d,i,n)=>{
+        d3.select(n[i])
+          .style('opacity', '0.85')
+          .attr('stroke-width', 3)
+        })
+      .on('mouseout', (d,i,n)=>{
+        d3.select(n[i])
+          .style('opacity', '0.50')
+          .attr('stroke-width', 1)
+      })
     //<-------------------------------------------------------linea minima-------------------------
 
 
@@ -119,6 +148,17 @@ export class LineasFechasComponent implements OnInit {
       .attr('stroke', '#2eb82e')
       .attr('stroke-width', 1)
       .attr('fill', 'none')
+      .style('opacity', '0.50' )
+      .on('mouseover', (d,i,n)=>{
+        d3.select(n[i])
+          .style('opacity', '0.85')
+          .attr('stroke-width', 3)
+        })
+      .on('mouseout', (d,i,n)=>{
+        d3.select(n[i])
+          .style('opacity', '0.50')
+          .attr('stroke-width', 1)
+      })
     //<-------------------------------------------------------linea maxima-------------------------
 
 
@@ -129,7 +169,7 @@ export class LineasFechasComponent implements OnInit {
       .data(datosMinima)
       .enter()
       .append('circle');
-
+      
     circleMinima
       .attr('cx', d => xScale(d.fecha) + margin.left)
       .attr('cy', d => yScale(d.valor) + margin.top)
